@@ -3,14 +3,21 @@ import { Editor } from "@monaco-editor/react";
 import { useTheme } from "./ThemeProvider";
 
 interface CodeEditorProps {
+  value: string;
   language: keyof typeof CODE_SNIPPETS;
   onMount: (editor: any, monaco: any) => void;
   onChange: (value: string | undefined) => void;
 }
 
-const CodeEditor = ({ language, onMount, onChange }: CodeEditorProps) => {
+const CodeEditor = ({
+  value,
+  language,
+  onMount,
+  onChange,
+}: CodeEditorProps) => {
   const { theme } = useTheme();
   const editorTheme = theme === "dark" ? "vs-dark" : "light";
+
   return (
     <Editor
       height={"100%"}
@@ -20,7 +27,8 @@ const CodeEditor = ({ language, onMount, onChange }: CodeEditorProps) => {
       onChange={onChange}
       path='src/components/CodeEditor.tsx'
       language={language}
-      value={CODE_SNIPPETS[language] || "// Write your code here"}
+      // value={CODE_SNIPPETS[language] || "// Write your code here"}
+      value={value || "// Write your code here"}
       defaultLanguage={language}
       defaultValue={CODE_SNIPPETS[language] || "// Write your code here"}
     />
