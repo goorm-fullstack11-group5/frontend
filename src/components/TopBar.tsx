@@ -2,6 +2,8 @@ import { ArrowLeft, Menu } from "lucide-react";
 // import LanguageSelector from "./LanguageSelector";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
+import instance, { authInstance, publicInstance } from "@/api/api";
+import axios from "axios";
 
 interface TopBarProps {
   language: string;
@@ -20,6 +22,17 @@ const TopBar = ({
 
   const handleBackNavigation = () => {
     navigate(-1);
+  };
+
+  const test = async () => {
+    try {
+      // console.log(import.meta.env.VITE_API_URL);
+      const response = await authInstance.get("/api/projects/1");
+
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -44,6 +57,8 @@ const TopBar = ({
       {/* <LanguageSelector language={language} onSelect={onSelect} /> */}
 
       {/* </div> */}
+
+      <Button onClick={test}>Test</Button>
     </div>
   );
 };
