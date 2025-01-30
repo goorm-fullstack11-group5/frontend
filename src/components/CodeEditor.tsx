@@ -6,15 +6,15 @@ interface CodeEditorProps {
   value: string;
   language: keyof typeof CODE_SNIPPETS;
   onMount: (editor: any, monaco: any) => void;
-  onChange: (value: string | undefined) => void;
+  // onChange: (value: string | undefined) => void;
 }
 
 const CodeEditor = ({
   value,
   language,
   onMount,
-  onChange,
-}: CodeEditorProps) => {
+}: // onChange,
+CodeEditorProps) => {
   const { theme } = useTheme();
   const editorTheme = theme === "dark" ? "vs-dark" : "light";
 
@@ -24,7 +24,7 @@ const CodeEditor = ({
       width={"100%"}
       theme={editorTheme}
       onMount={onMount}
-      onChange={onChange}
+      // onChange={onChange}
       path='src/components/CodeEditor.tsx'
       language={language}
       // value={CODE_SNIPPETS[language] || "// Write your code here"}
