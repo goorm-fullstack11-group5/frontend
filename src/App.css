@@ -1,0 +1,484 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: black;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ide-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #1e1e1e;
+  color: white;
+  padding: 20px;
+}
+
+.editor-container {
+  flex: 1;
+  background-color: #1e1e1e;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #ffffff;
+}
+
+.app-header {
+  background-color: #000000;
+  color: white;
+  padding: 0.5rem;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #3c3c3c;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.language-select {
+  padding: 0.5rem;
+  background-color: #3c3c3c;
+  color: white;
+  border: 1px solid #525252;
+  border-radius: 4px;
+}
+
+.run-button, .reset-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.run-button {
+  background-color: #0078d4;
+  color: white;
+}
+
+.run-button:hover {
+  background-color: #006cbd;
+}
+
+.reset-button {
+  background-color: #4a4a4a;
+  color: white;
+}
+
+.reset-button:hover {
+  background-color: #5a5a5a;
+}
+
+.main-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  background-color: #ffffff;
+  min-height: calc(100vh - 48px);
+  margin-top: 48px;
+}
+
+.editor-container {
+  flex: 2;
+  height: 100%;
+  border-right: 1px solid #3c3c3c;
+}
+
+.output-container {
+  flex: 1;
+  background-color: #1e1e1e;
+  color: white;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.output-container h3 {
+  margin-top: 0;
+  color: #0078d4;
+}
+
+.output-container pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  color: #d4d4d4;
+  font-family: 'Consolas', 'Monaco', monospace;
+}
+
+.menu-icon {
+  position: absolute;
+  left: 1rem;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.menu-icon:hover {
+  color: #0078d4;
+}
+
+.create-project-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 48px);
+  width: 100%;
+}
+
+.create-button-container {
+  text-align: center;
+}
+
+.create-project-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  background-color: #0078d4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.create-project-button:hover {
+  background-color: #0086ef;
+}
+
+.create-project-button .material-icons {
+  font-size: 24px;
+}
+
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.template-card {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-align: center;
+  color: #ffffff;
+}
+
+.template-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  background-color: #2d2d2d;
+}
+
+.template-icon {
+  font-size: 48px;
+  color: #0078d4;
+  margin-bottom: 1rem;
+}
+
+.template-card h3 {
+  margin: 0.5rem 0;
+  color: #ffffff;
+}
+
+.template-card p {
+  margin: 0;
+  color: #a0a0a0;
+  font-size: 0.9rem;
+}
+
+.projects-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #e3f2fd;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #bbdefb;
+}
+
+.project-card {
+  background: white;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.project-content {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.project-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  flex-shrink: 0;
+}
+
+.project-image h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.project-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.project-details {
+  flex: 1;
+}
+
+.label {
+  color: #666;
+  margin: 0;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+.date {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.description {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.continue-button {
+  width: 100%;
+  background: #1a1a1a;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.continue-button:hover {
+  background: #333;
+}
+
+.new-project-button {
+  width: 100%;
+  padding: 15px;
+  background: #1a1a1a;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 20px;
+}
+
+.new-project-button:hover {
+  background: #333;
+}
+
+.side-menu {
+  position: fixed;
+  top: 0;
+  left: -250px;  /* 초기에는 화면 밖에 위치 */
+  width: 250px;
+  height: 100vh;
+  background-color: #464B55;
+  transition: left 0.3s ease;
+  z-index: 1001;
+  color: white;
+}
+
+.side-menu.open {
+  left: 0;  /* 메뉴가 열릴 때 화면에 표시 */
+}
+
+.side-menu-header {
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.close-icon {
+  cursor: pointer;
+}
+
+.menu-items {
+  padding: 1rem;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-item .material-icons {
+  font-size: 20px;
+}
+
+/* 메뉴가 열렸을 때 배경을 어둡게 처리 */
+.side-menu-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: none;
+}
+
+.side-menu-backdrop.show {
+  display: block;
+}
+
+.new-project-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 48px);
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 24px;
+}
+
+.new-project-form {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+}
+
+.new-project-form h2 {
+  margin: 0 0 20px 0;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.error-text {
+  color: #ff0000;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 10px;
+  background: #1a1a1a;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit-button:hover {
+  background: #333;
+}
+
+.app-header h1 {
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.app-header h1:hover {
+  color: #0078d4;  /* 호버 시 색상 변경 */
+}
