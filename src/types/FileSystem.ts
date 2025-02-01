@@ -1,14 +1,6 @@
-export type FileSystemItem = File | Folder;
-
-export interface File {
-  type: "file";
+export interface FileSystem {
+  id: number;
   name: string;
-  path: string;
-}
-
-export interface Folder {
-  type: "folder";
-  name: string;
-  path: string;
-  children: FileSystemItem[];
+  isFolder: boolean;
+  files?: FileSystem[];
 }

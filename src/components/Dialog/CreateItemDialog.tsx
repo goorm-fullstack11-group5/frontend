@@ -15,28 +15,34 @@ interface CreateFileDialogProps {
   newFileName: string;
   setNewFileName: (name: string) => void;
   confirmCreateFile: () => void;
+  isFolder: boolean;
 }
 
-const CreateFileDialog = ({
+const CreateItemDialog = ({
   isCreateDialogOpen,
   setIsCreateDialogOpen,
   newFileName,
   setNewFileName,
   confirmCreateFile,
+  isFolder,
 }: CreateFileDialogProps) => {
   return (
     <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>새 파일 생성</DialogTitle>
+          <DialogTitle>
+            {isFolder ? "새 폴더 생성" : "새 파일 생성"}
+          </DialogTitle>
           <DialogDescription>
-            새로 생성할 파일의 이름을 입력하세요.
+            {isFolder
+              ? "새로 생성할 폴더의 이름을 입력하세요."
+              : "새로 생성할 파일의 이름을 입력하세요."}
           </DialogDescription>
         </DialogHeader>
         <Input
           value={newFileName}
           onChange={(e) => setNewFileName(e.target.value)}
-          placeholder='파일 이름'
+          placeholder={isFolder ? "폴더 이름" : "파일 이름"}
         />
         <DialogFooter>
           <Button
@@ -52,4 +58,4 @@ const CreateFileDialog = ({
   );
 };
 
-export default CreateFileDialog;
+export default CreateItemDialog;

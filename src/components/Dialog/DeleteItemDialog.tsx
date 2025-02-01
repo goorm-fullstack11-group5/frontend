@@ -14,22 +14,26 @@ interface DeleteFileDialogProps {
   isDeleteDialogOpen: boolean;
   setIsDeleteDialogOpen: (open: boolean) => void;
   confirmDelete: () => void;
+  isFolder: boolean;
 }
 
-const DeleteFileDialog = ({
+const DeleteItemDialog = ({
   fileToDelete,
   isDeleteDialogOpen,
   setIsDeleteDialogOpen,
   confirmDelete,
+  isFolder,
 }: DeleteFileDialogProps) => {
   return (
     <AlertDialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>파일 삭제 확인</AlertDialogTitle>
+          <AlertDialogTitle>
+            {isFolder ? "폴더 삭제 확인" : "파일 삭제 확인"}
+          </AlertDialogTitle>
           <AlertDialogDescription>
-            {fileToDelete}을 정말 삭제하시겠습니까? 이 작업은 되돌릴 수
-            없습니다.
+            {fileToDelete} {isFolder ? "폴더" : "파일"}을 정말 삭제하시겠습니까?
+            이 작업은 되돌릴 수 없습니다.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -41,4 +45,4 @@ const DeleteFileDialog = ({
   );
 };
 
-export default DeleteFileDialog;
+export default DeleteItemDialog;

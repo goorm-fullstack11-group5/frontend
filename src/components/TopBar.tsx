@@ -2,32 +2,30 @@ import { ArrowLeft, Menu } from "lucide-react";
 // import LanguageSelector from "./LanguageSelector";
 import { useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
-import instance, { authInstance, publicInstance } from "@/api/api";
-import axios from "axios";
+import { authInstance } from "@/api/api";
 
 interface TopBarProps {
-  language: string;
-  onSelect: (lang: string) => void;
   onToggleFileList: () => void;
   showFileList: boolean;
 }
 
-const TopBar = ({
-  language,
-  onSelect,
-  onToggleFileList,
-  showFileList,
-}: TopBarProps) => {
+const TopBar = ({ onToggleFileList, showFileList }: TopBarProps) => {
   const navigate = useNavigate();
 
   const handleBackNavigation = () => {
     navigate(-1);
   };
 
-  const test = async () => {
+  const getToken = async () => {
     try {
-      // console.log(import.meta.env.VITE_API_URL);
-      const response = await authInstance.get("/api/projects/1");
+      const response = await authInstance.post("/api/auth/login", {
+        username: "foo",
+        password: "foo",
+      });
+
+      const token = response.data.token;
+
+      window.localStorage.setItem("token", token);
 
       console.log(response.data);
     } catch (error) {
@@ -53,12 +51,7 @@ const TopBar = ({
           <Menu className='h-5 w-5' />
         </Button>
       </div>
-      {/* <div className='p-2'> */}
-      {/* <LanguageSelector language={language} onSelect={onSelect} /> */}
-
-      {/* </div> */}
-
-      <Button onClick={test}>Test</Button>
+      <Button onClick={getToken}>Get Token</Button>
     </div>
   );
 };

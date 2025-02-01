@@ -3,10 +3,10 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ChevronRight, Folder, FolderPlus, Plus, Trash2 } from "lucide-react";
 import FileIcon from "./FileIcon";
-import type { FileSystemItem as FileSystemItemType } from "@/types/FileSystem";
+import type { FileSystem } from "@/types/FileSystem";
 
 interface FileSystemItemProps {
-  item: FileSystemItemType;
+  item: FileSystem;
   depth: number;
   selectedFile: string;
   expandedFolders: Set<string>;
@@ -27,29 +27,30 @@ const FileSystemItem = ({
   onDeleteItem,
 }: FileSystemItemProps) => {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-  const isExpanded = expandedFolders.has(item.path);
+  const isExpanded = expandedFolders.has(item.id.toString());
 
   return (
     <div style={{ paddingLeft: `${depth * 16}px` }}>
       <div
         className='relative'
-        onMouseEnter={() => setHoveredItem(item.path)}
+        onMouseEnter={() => setHoveredItem(item.id.toString())}
         onMouseLeave={() => setHoveredItem(null)}
       >
         <Button
           variant='ghost'
           className={cn(
             "w-full justify-start text-left font-normal",
-            selectedFile === item.path && "bg-accent text-accent-foreground",
+            selectedFile === item.id.toString() &&
+              "bg-accent text-accent-foreground",
             "hover:bg-accent hover:text-accent-foreground transition-colors"
           )}
           onClick={() =>
-            item.type === "file"
-              ? onFileSelect(item.path)
-              : onFolderToggle(item.path)
+            item.isFolder
+              ? onFolderToggle(item.id.toString())
+              : onFileSelect(item.id.toString())
           }
         >
-          {item.type === "folder" && (
+          {item.isFolder && (
             <ChevronRight
               className={cn(
                 "mr-2 h-4 w-4 transition-transform",
@@ -57,20 +58,24 @@ const FileSystemItem = ({
               )}
             />
           )}
-          {item.type === "folder" ? (
+          {item.isFolder ? (
             <Folder className='mr-2 h-4 w-4' />
           ) : (
             <FileIcon fileName={item.name} />
           )}
           {item.name}
         </Button>
-        {hoveredItem === item.path && (
+        {hoveredItem === item.id.toString() && (
           <div className='flex gap-2'>
-            {item.type === "folder" && (
+            {item.isFolder && (
               <Button
                 variant='ghost'
                 size='icon'
                 className='absolute right-14 top-1/2 transform -translate-y-1/2'
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onCreateItem(item.id.toString());
+                }}
               >
                 <FolderPlus className='h-4 w-4' />
               </Button>
@@ -82,7 +87,7 @@ const FileSystemItem = ({
               className='absolute right-8 top-1/2 transform -translate-y-1/2'
               onClick={(e) => {
                 e.stopPropagation();
-                onCreateItem(item.path);
+                onCreateItem(item.id.toString());
               }}
             >
               <Plus className='h-4 w-4' />
@@ -93,7 +98,7 @@ const FileSystemItem = ({
               className='absolute right-2 top-1/2 transform -translate-y-1/2'
               onClick={(e) => {
                 e.stopPropagation();
-                onDeleteItem(item.path);
+                onDeleteItem(item.id.toString());
               }}
             >
               <Trash2 className='h-4 w-4' />
@@ -101,11 +106,11 @@ const FileSystemItem = ({
           </div>
         )}
       </div>
-      {item.type === "folder" &&
+      {item.isFolder &&
         isExpanded &&
-        item.children.map((child) => (
+        item.files?.map((child) => (
           <FileSystemItem
-            key={child.path}
+            key={child.id}
             item={child}
             depth={depth + 1}
             selectedFile={selectedFile}
