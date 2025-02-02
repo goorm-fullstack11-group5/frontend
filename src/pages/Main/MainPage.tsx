@@ -1,10 +1,25 @@
+import Navbar from "@/components/NavBar";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom";
 
-const MainPage = () => {
+interface MainPageProps {
+  setIsAuthenticated: (value: boolean) => void;
+}
+
+const MainPage = ({ setIsAuthenticated }: MainPageProps) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsAuthenticated(false);
+    navigate("/login");
+  };
+
   return (
-    <div>
-      Main Page
+    <div className='flex flex-col min-h-screen'>
+      <Navbar onLogout={handleLogout} isAuthenticated={true} />
+      <h1>Main Page</h1>
+
       <div>
         <Button>
           <Link to='/login'>Login</Link>
@@ -20,6 +35,6 @@ const MainPage = () => {
       </div>
     </div>
   );
-}
+};
 
-export default MainPage
+export default MainPage;
