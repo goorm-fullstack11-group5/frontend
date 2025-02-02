@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { authInstance } from "@/api/api";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { Input } from "@/components/ui/input";
+import { Icon, TrashIcon } from "lucide-react";
+import { Select } from "@/components/ui/select";
 
 interface MainPageProps {
   setIsAuthenticated: (value: boolean) => void;
@@ -87,6 +89,20 @@ const MainPage = ({ setIsAuthenticated }: MainPageProps) => {
     }
   };
 
+  const handleDeleteProject = async (id: any) => {
+    setError("");
+
+    try {
+      const response = await authInstance.delete(`/api/projects/${id}`, );
+      
+      console.log(response);
+      handleRequestProjects();
+    } catch (error) {
+      console.error(error);
+      setError("Failed to delete project.");
+    }
+  }
+
   const formatDateTime = (datetimeStr: string) => {
     const date = new Date(datetimeStr);
 
@@ -103,7 +119,7 @@ const MainPage = ({ setIsAuthenticated }: MainPageProps) => {
   return (
     <div className='flex flex-col min-h-screen'>
       <Navbar onLogout={handleLogout} isAuthenticated={true} />
-      <div className='flex flex-grow items-center justify-center bg-background'>
+      <div className='flex flex-grow justify-center bg-background m-4'>
         {showNewProjectForm ? (
           <Dialog open={showNewProjectForm} onOpenChange={setShowNewProjectForm}>
             <DialogContent>
@@ -113,7 +129,7 @@ const MainPage = ({ setIsAuthenticated }: MainPageProps) => {
                 </CardHeader>
                 <CardContent className='flex flex-col w-96 gap-4'>
 
-                  <Label htmlFor='projectName'>프로젝트 이름</Label>
+                  <Label>프로젝트 이름</Label>
                   <Input
                     id='projectName'
                     placeholder='프로젝트 이름을 입력하세요'
@@ -122,7 +138,7 @@ const MainPage = ({ setIsAuthenticated }: MainPageProps) => {
                     required
                   />
 
-                  <Label htmlFor='projectName'>프로젝트 이름</Label>
+                  <Label>프로젝트 설명</Label>
                   <Input
                     id='projectDetail'
                     placeholder='프로젝트 설명을 입력하세요'
@@ -131,13 +147,17 @@ const MainPage = ({ setIsAuthenticated }: MainPageProps) => {
                     required
                   />
 
-
-                  <select className='select w-full'>
-                    <option value=''>언어를 선택해주세요.</option>
-                    <option value='javascript'>JavaScript</option>
-                    <option value='python'>Python</option>
-                    <option value='java'>Java</option>
-                  </select>
+                  <Label>프로젝트 언어</Label>
+                  <Select className='select w-full'
+                    options={[
+                      {value:'',  label:"언어를 선택해주세요."},
+                      {value:'javascript',  label:"JavaScript"},
+                      {value:'python',  label:"Python"},
+                      {value:'java',  label:"Java"},
+                    ]}
+                    onChange={(event) => {setProjectLanguage(event.target.value)}}
+                  >
+                  </Select>
                   <Button className='w-full' onClick={handleCreateProjects}>생성</Button>
                 </CardContent>
               </Card>
@@ -154,7 +174,12 @@ const MainPage = ({ setIsAuthenticated }: MainPageProps) => {
                   <p> {project.detail || "설명 없음"}</p>
                   <p> 생성 날짜 : {formatDateTime(project.createdAt) || "날짜 없음"}</p>
                   <p> 마지막 실행 날짜 : {formatDateTime(project.updatedAt) || "날짜 없음"}</p>
-                  <Button onClick={() => navigate("/editor")}>Continue</Button>
+                  <div className="flex flex-row gap-3">
+                    <Button onClick={() => navigate("/editor")}>Continue</Button>
+                    <Button onClick={() => handleDeleteProject(project.id)} className="bg-red-500">
+                      <TrashIcon></TrashIcon>
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
             ))}
